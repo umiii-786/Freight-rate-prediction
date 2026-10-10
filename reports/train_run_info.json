@@ -1,0 +1,6 @@
+{
+    "run_id": "447e252122114be389ffd6e932c29c02",
+    "model_name": "gradient_boosting",
+    "model_uri": "models:/m-99446ccbc65a4d858dc087c1cda79993",
+    "model_id": "m-99446ccbc65a4d858dc087c1cda79993"
+}
