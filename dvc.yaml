@@ -51,3 +51,21 @@ stages:
     metrics:
     - reports/metrics.json:
         cache: false
+  train_model:
+    cmd: python -m src.model.train_model
+    deps:
+    - data/processed/train_test.csv
+    - src/features/custom_transformers.py
+    - src/features/preprocessing.py
+    - src/model/model_factory.py
+    - src/model/train_model.py
+    - src/tracking.py
+    params:
+    - base
+    - cross_validation.log_target
+    - features
+    - models
+    - train
+    outs:
+    - models/model.pkl
+    - reports/train_run_info.json

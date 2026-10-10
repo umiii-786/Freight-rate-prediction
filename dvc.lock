@@ -211,3 +211,71 @@ stages:
       hash: md5
       md5: 264dd75e19a51817383767a157a02cac
       size: 381
+  train_model:
+    cmd: python -m src.model.train_model
+    deps:
+    - path: data/processed/train_test.csv
+      hash: md5
+      md5: 65f983fdf3c99ea691d7889e7315ff44
+      size: 4302297
+    - path: src/features/custom_transformers.py
+      hash: md5
+      md5: 585b4f112861a0d543c4e0020b4976e0
+      size: 1342
+    - path: src/features/preprocessing.py
+      hash: md5
+      md5: 2e37b494edcb0d05530919274a46a7e4
+      size: 1329
+    - path: src/model/model_factory.py
+      hash: md5
+      md5: 304df18208d8384cf9d5682577411da1
+      size: 1531
+    - path: src/model/train_model.py
+      hash: md5
+      md5: 5ead749ec83abe47398034b03ff97c38
+      size: 2753
+    - path: src/tracking.py
+      hash: md5
+      md5: f6c79dbad68c1bed45e866944ccf39fb
+      size: 929
+    params:
+      params.yaml:
+        base:
+          random_state: 42
+          target: posted_rate
+        cross_validation.log_target: true
+        features:
+          numeric:
+          - weight
+          - distance
+          - pickup_lat
+          - pickup_lon
+          - delivery_lat
+          - delivery_lon
+          categorical:
+          - equipment
+        models:
+          linear_regression: {}
+          random_forest:
+            n_estimators: 200
+            max_features: 0.75
+            max_samples: 0.5
+            n_jobs: -1
+            random_state: 42
+          gradient_boosting:
+            n_estimators: 200
+            max_depth: 5
+            learning_rate: 0.05
+            subsample: 0.75
+            random_state: 42
+        train:
+          model_name: gradient_boosting
+    outs:
+    - path: models/model.pkl
+      hash: md5
+      md5: 79c4d46457400d252bcc17b3a1c54255
+      size: 911645
+    - path: reports/train_run_info.json
+      hash: md5
+      md5: aeb7033c6dcda7e889bb4c80c11a29e5
+      size: 213
