@@ -1,0 +1,12 @@
+stages:
+  data_ingestion:
+    cmd: python -m src.data.data_ingestion
+    deps:
+    - data/external
+    - src/config.py
+    - src/data/data_ingestion.py
+    - src/utils.py
+    params:
+    - data_ingestion
+    outs:
+    - data/raw

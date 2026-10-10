@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+data
+models
+# Secrets
+.env
+
+# Logs & local MLflow store (NOT versioned by DVC - tracked by MLflow)
+logs/
+mlruns/
+mlflow.db
+mlartifacts/
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
+
+# NOTE: do NOT ignore /data or /models here. DVC adds its own .gitignore
+# entries automatically for everything it tracks.

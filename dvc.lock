@@ -1,0 +1,75 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python -m src.data.data_ingestion
+    deps:
+    - path: data/external
+      hash: md5
+      md5: ac9a503361af427d630576fab5792324.dir
+      size: 7489899
+      nfiles: 4
+    - path: src/config.py
+      hash: md5
+      md5: 7fb817d7c99297afd81c4072ff211492
+      size: 1391
+    - path: src/data/data_ingestion.py
+      hash: md5
+      md5: 546d92cbb9bcfbb42fff09d9c6c5532d
+      size: 1607
+    - path: src/utils.py
+      hash: md5
+      md5: 09e33b33a4ccb51f973984a0b440ed4e
+      size: 2126
+    params:
+      params.yaml:
+        data_ingestion:
+          source_dir: data/external
+          files:
+            train: train-test.csv
+            validation: validation.csv
+            validation_template: validation-predictions-template.csv
+            december: december-chart-inputs.csv
+          required_columns:
+            train:
+            - load_id
+            - pickup
+            - delivery
+            - pickup_lat
+            - pickup_lon
+            - delivery_lat
+            - delivery_lon
+            - distance
+            - equipment
+            - weight
+            - date
+            - market_index
+            - quote_signal
+            - posted_rate
+            validation:
+            - load_id
+            - pickup
+            - delivery
+            - pickup_lat
+            - pickup_lon
+            - delivery_lat
+            - delivery_lon
+            - distance
+            - equipment
+            - weight
+            - date
+            - market_index
+            validation_template:
+            - load_id
+            december:
+            - pickup
+            - delivery
+            - distance
+            - equipment
+            - weight
+            - date
+    outs:
+    - path: data/raw
+      hash: md5
+      md5: b0aea9b6fff01c91fd5b4177efa02b50.dir
+      size: 7561934
+      nfiles: 4

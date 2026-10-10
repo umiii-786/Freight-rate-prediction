@@ -1,0 +1,59 @@
+# ---------------------------------------------------------------
+# Central config. DVC tracks the keys each stage lists under
+# `params:` -> change a value here and only the affected stages re-run.
+# ---------------------------------------------------------------
+base:
+  random_state: 42
+  target: posted_rate
+
+mlflow:
+  experiment_name: freight-rate-prediction
+  # Default is a local SQLite DB. To use DagsHub / a remote server, set the
+  # MLFLOW_TRACKING_URI env var (see .env.example) - it overrides this value.
+  tracking_uri: sqlite:///mlflow.db
+
+data_ingestion:
+  source_dir: data/external
+  # logical name -> file name inside source_dir
+  files:
+    train: train-test.csv
+    validation: validation.csv
+    validation_template: validation-predictions-template.csv
+    december: december-chart-inputs.csv
+  # columns that MUST exist (schema check)
+  required_columns:
+    train: [load_id, pickup, delivery, pickup_lat, pickup_lon, delivery_lat,
+            delivery_lon, distance, equipment, weight, date, market_index,
+            quote_signal, posted_rate]
+    validation: [load_id, pickup, delivery, pickup_lat, pickup_lon, delivery_lat,
+                 delivery_lon, distance, equipment, weight, date, market_index]
+    validation_template: [load_id]
+    december: [pickup, delivery, distance, equipment, weight, date]
+
+features:
+  numeric: [weight, distance, pickup_lat, pickup_lon, delivery_lat, delivery_lon]
+  categorical: [equipment]
+
+cross_validation:
+  n_folds: 3
+  test_months: 2
+  log_target: true
+  models_to_compare: [linear_regression, random_forest, gradient_boosting]
+
+train:
+  model_name: gradient_boosting   # must be one of the keys under `models`
+
+models:
+  linear_regression: {}
+  random_forest:
+    n_estimators: 200
+    max_features: 0.75
+    max_samples: 0.5
+    n_jobs: -1
+    random_state: 42
+  gradient_boosting:
+    n_estimators: 200
+    max_depth: 5
+    learning_rate: 0.05
+    subsample: 0.75
+    random_state: 42
