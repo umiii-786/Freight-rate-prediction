@@ -28,3 +28,26 @@ stages:
     - features
     outs:
     - data/processed
+  evaluate_models:
+    cmd: python -m src.model.evaluate_models
+    deps:
+    - data/processed/train_test.csv
+    - src/features/custom_transformers.py
+    - src/features/preprocessing.py
+    - src/model/cross_validation.py
+    - src/model/evaluate_models.py
+    - src/model/model_factory.py
+    - src/tracking.py
+    params:
+    - base
+    - cross_validation
+    - features
+    - models
+    - train.model_name
+    outs:
+    - reports/cv_fold_results.csv
+    - reports/figures/model_comparison.png
+    - reports/model_comparison.csv
+    metrics:
+    - reports/metrics.json:
+        cache: false

@@ -10,8 +10,8 @@ stages:
       nfiles: 4
     - path: src/config.py
       hash: md5
-      md5: 7fb817d7c99297afd81c4072ff211492
-      size: 1391
+      md5: eeae8bf19dff0380654da4110ff3f248
+      size: 1456
     - path: src/data/data_ingestion.py
       hash: md5
       md5: 546d92cbb9bcfbb42fff09d9c6c5532d
@@ -125,3 +125,89 @@ stages:
       md5: 000ce5ff7ecb84d11c358a7946e6177b.dir
       size: 5416434
       nfiles: 3
+  evaluate_models:
+    cmd: python -m src.model.evaluate_models
+    deps:
+    - path: data/processed/train_test.csv
+      hash: md5
+      md5: 65f983fdf3c99ea691d7889e7315ff44
+      size: 4302297
+    - path: src/features/custom_transformers.py
+      hash: md5
+      md5: 585b4f112861a0d543c4e0020b4976e0
+      size: 1342
+    - path: src/features/preprocessing.py
+      hash: md5
+      md5: 2e37b494edcb0d05530919274a46a7e4
+      size: 1329
+    - path: src/model/cross_validation.py
+      hash: md5
+      md5: 18e654cd304e03c31c0b7d7e0b9f1530
+      size: 2838
+    - path: src/model/evaluate_models.py
+      hash: md5
+      md5: bacdbe922dd5367dcb42d42ca6318e72
+      size: 3993
+    - path: src/model/model_factory.py
+      hash: md5
+      md5: 304df18208d8384cf9d5682577411da1
+      size: 1531
+    - path: src/tracking.py
+      hash: md5
+      md5: f6c79dbad68c1bed45e866944ccf39fb
+      size: 929
+    params:
+      params.yaml:
+        base:
+          random_state: 42
+          target: posted_rate
+        cross_validation:
+          n_folds: 3
+          test_months: 2
+          log_target: true
+          models_to_compare:
+          - linear_regression
+          - random_forest
+          - gradient_boosting
+        features:
+          numeric:
+          - weight
+          - distance
+          - pickup_lat
+          - pickup_lon
+          - delivery_lat
+          - delivery_lon
+          categorical:
+          - equipment
+        models:
+          linear_regression: {}
+          random_forest:
+            n_estimators: 200
+            max_features: 0.75
+            max_samples: 0.5
+            n_jobs: -1
+            random_state: 42
+          gradient_boosting:
+            n_estimators: 200
+            max_depth: 5
+            learning_rate: 0.05
+            subsample: 0.75
+            random_state: 42
+        train.model_name: gradient_boosting
+    outs:
+    - path: reports/cv_fold_results.csv
+      hash: md5
+      md5: ed499ef428f1420699edb08dd84fb897
+      size: 1411
+    - path: reports/figures/model_comparison.png
+      hash: md5
+      md5: e30a343618f3d772a37ed9631db59b5a
+      size: 32630
+    - path: reports/metrics.json
+      hash: md5
+      md5: a2b81d171aef58727d0b428b8f663402
+      size: 221
+    - path: reports/model_comparison.csv
+      hash: md5
+      md5: 264dd75e19a51817383767a157a02cac
+      size: 381

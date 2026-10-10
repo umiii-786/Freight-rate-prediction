@@ -1,9 +1,10 @@
 """Central place for paths, constants and params.yaml loading."""
 from pathlib import Path
-
+from dotenv import load_dotenv
 import yaml
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+load_dotenv(PROJECT_ROOT / ".env")
 PARAMS_PATH = PROJECT_ROOT / "params.yaml"
 
 # ---- folders -------------------------------------------------------------

@@ -3,7 +3,7 @@ Runs time-based CV for every model in `cross_validation.models_to_compare`,
 logs one MLflow run per model, and writes:
   reports/cv_fold_results.csv        per-fold metrics for all models
   reports/model_comparison.csv       average metrics per model
-  reports/metrics.json               averages of the model chosen in train.model_name (DVC metrics)
+  reports/metrics.json               averages of the model chosen in train.model_name (dvc metrics)
   reports/figures/model_comparison.png
 """
 import matplotlib
