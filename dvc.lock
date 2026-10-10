@@ -91,3 +91,37 @@ stages:
       md5: af2a4dca3903bd4f30a612b016fd9204.dir
       size: 6937465
       nfiles: 3
+  build_features:
+    cmd: python -m src.features.build_features
+    deps:
+    - path: data/interim
+      hash: md5
+      md5: af2a4dca3903bd4f30a612b016fd9204.dir
+      size: 6937465
+      nfiles: 3
+    - path: src/features/build_features.py
+      hash: md5
+      md5: 9575620b44ba369e8b54e62a9090d947
+      size: 3878
+    - path: src/features/preprocessing.py
+      hash: md5
+      md5: 2e37b494edcb0d05530919274a46a7e4
+      size: 1329
+    params:
+      params.yaml:
+        features:
+          numeric:
+          - weight
+          - distance
+          - pickup_lat
+          - pickup_lon
+          - delivery_lat
+          - delivery_lon
+          categorical:
+          - equipment
+    outs:
+    - path: data/processed
+      hash: md5
+      md5: 000ce5ff7ecb84d11c358a7946e6177b.dir
+      size: 5416434
+      nfiles: 3
