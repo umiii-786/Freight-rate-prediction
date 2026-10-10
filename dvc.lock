@@ -279,3 +279,48 @@ stages:
       hash: md5
       md5: aeb7033c6dcda7e889bb4c80c11a29e5
       size: 213
+  predict_model:
+    cmd: python -m src.model.predict_model
+    deps:
+    - path: data/processed/december_inputs.csv
+      hash: md5
+      md5: 32e6042df31783966f9a583684391e13
+      size: 2858
+    - path: data/processed/validation.csv
+      hash: md5
+      md5: 4da8491dd607d7b0cfeb6dc4097b6511
+      size: 1111279
+    - path: data/raw/december_inputs.csv
+      hash: md5
+      md5: b94821f1df9501b0f453f6358130f101
+      size: 1675
+    - path: data/raw/validation_predictions_template.csv
+      hash: md5
+      md5: 58d754ca0cdd96a6bd64b1f997e11e59
+      size: 144024
+    - path: models/model.pkl
+      hash: md5
+      md5: 79c4d46457400d252bcc17b3a1c54255
+      size: 911645
+    - path: src/model/predict_model.py
+      hash: md5
+      md5: 11f97d1f1802d282a1796db966c9a407
+      size: 2844
+    params:
+      params.yaml:
+        features:
+          numeric:
+          - weight
+          - distance
+          - pickup_lat
+          - pickup_lon
+          - delivery_lat
+          - delivery_lon
+          categorical:
+          - equipment
+    outs:
+    - path: reports/predictions
+      hash: md5
+      md5: 916933821802c1d685839ec3f8c93a93.dir
+      size: 355464
+      nfiles: 2

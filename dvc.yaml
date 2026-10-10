@@ -69,3 +69,16 @@ stages:
     outs:
     - models/model.pkl
     - reports/train_run_info.json
+  predict_model:
+    cmd: python -m src.model.predict_model
+    deps:
+    - data/processed/december_inputs.csv
+    - data/processed/validation.csv
+    - data/raw/december_inputs.csv
+    - data/raw/validation_predictions_template.csv
+    - models/model.pkl
+    - src/model/predict_model.py
+    params:
+    - features
+    outs:
+    - reports/predictions
